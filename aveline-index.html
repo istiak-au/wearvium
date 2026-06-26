@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aveline — Contemporary Atelier</title>
+<meta name="description" content="Aveline is a contemporary fashion atelier. Considered pieces, made to last — new arrivals, the Pre-Look 2026 campaign, and the bridal collection.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bone:#F4F1EC;
+    --paper:#FBFAF7;
+    --ink:#16140F;
+    --ink-soft:#5A554B;
+    --line:#E3DDD3;
+    --wine:#7A2B34;
+    --wine-deep:#5E1F27;
+    --maxw:1320px;
+    --pad:clamp(20px,5vw,64px);
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bone);
+    color:var(--ink);
+    font-family:'Jost',system-ui,sans-serif;
+    font-weight:400;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  ::selection{background:var(--wine);color:var(--bone)}
+
+  .display{font-family:'Cormorant Garamond',serif;font-weight:500;line-height:1.02;letter-spacing:-.01em}
+  .eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:500;color:var(--ink-soft)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
+
+  a:focus-visible,button:focus-visible{outline:2px solid var(--wine);outline-offset:3px;border-radius:1px}
+
+  /* ---------- announcement ---------- */
+  .announce{
+    background:var(--ink);color:var(--bone);
+    text-align:center;font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+    padding:9px 16px;
+  }
+
+  /* ---------- nav ---------- */
+  header{position:sticky;top:0;z-index:60;background:rgba(244,241,236,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);transition:background .3s}
+  .nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:74px}
+  .nav-links,.nav-icons{display:flex;align-items:center;gap:30px}
+  .nav-icons{justify-content:flex-end;gap:22px}
+  .nav-links a,.nav-icons button{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:400;position:relative;color:var(--ink)}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:-5px;width:0;height:1px;background:var(--ink);transition:width .35s var(--ease)}
+  .nav-links a:hover::after{width:100%}
+  .brand{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;letter-spacing:.16em;text-align:center;line-height:1}
+  .cart-btn{position:relative}
+  .cart-count{position:absolute;top:-9px;right:-12px;background:var(--wine);color:var(--bone);font-size:10px;letter-spacing:0;min-width:16px;height:16px;border-radius:9px;display:grid;place-items:center;padding:0 4px;font-weight:500}
+  .menu-toggle{display:none}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;min-height:calc(100vh - 74px - 31px);display:flex;align-items:flex-end;overflow:hidden}
+  .hero-media{position:absolute;inset:0;z-index:0}
+  .hero-media img{width:100%;height:100%;object-fit:cover;object-position:center 22%}
+  .hero-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.18) 0%,rgba(0,0,0,0) 32%,rgba(0,0,0,.05) 60%,rgba(0,0,0,.42) 100%)}
+  .hero-inner{position:relative;z-index:2;width:100%;padding-bottom:clamp(40px,7vw,84px);color:var(--bone)}
+  .hero-eyebrow{color:rgba(244,241,236,.85);margin-bottom:20px}
+  .hero h1{font-size:clamp(54px,11vw,164px);color:var(--bone);font-weight:500}
+  .hero h1 em{font-style:italic;font-weight:400}
+  .hero-row{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:28px;margin-top:26px}
+  .hero-row p{max-width:34ch;color:rgba(244,241,236,.9);font-weight:300;font-size:15px}
+  .btn{display:inline-flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;padding:15px 30px;border:1px solid currentColor;transition:.4s var(--ease)}
+  .btn .arrow{transition:transform .4s var(--ease)}
+  .btn:hover .arrow{transform:translateX(6px)}
+  .btn-light{background:var(--bone);color:var(--ink);border-color:var(--bone)}
+  .btn-light:hover{background:transparent;color:var(--bone)}
+  .btn-dark{background:var(--ink);color:var(--bone);border-color:var(--ink)}
+  .btn-dark:hover{background:transparent;color:var(--ink)}
+
+  /* hero load reveal */
+  .reveal{opacity:0;transform:translateY(26px)}
+  .reveal.in{opacity:1;transform:none;transition:opacity 1s var(--ease),transform 1s var(--ease)}
+  .d1{transition-delay:.05s}.d2{transition-delay:.18s}.d3{transition-delay:.32s}
+
+  /* ---------- marquee ---------- */
+  .marquee{border-bottom:1px solid var(--line);background:var(--paper);overflow:hidden;white-space:nowrap}
+  .marquee-track{display:inline-flex;gap:58px;padding:18px 0;animation:scroll 32s linear infinite;will-change:transform}
+  .marquee span{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;color:var(--ink-soft);display:inline-flex;align-items:center;gap:58px}
+  .marquee span::after{content:"✦";font-style:normal;font-size:10px;color:var(--wine)}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+
+  /* ---------- section heading ---------- */
+  .sec{padding:clamp(64px,9vw,124px) 0}
+  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:46px;flex-wrap:wrap}
+  .sec-head h2{font-size:clamp(34px,5.5vw,68px)}
+  .sec-head a{font-size:12px;letter-spacing:.16em;text-transform:uppercase;border-bottom:1px solid var(--ink);padding-bottom:3px;transition:.3s}
+  .sec-head a:hover{color:var(--wine);border-color:var(--wine)}
+
+  /* ---------- product grid ---------- */
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,1.8vw,26px)}
+  .card{position:relative}
+  .card-media{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--line)}
+  .card-media img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s var(--ease),opacity .5s ease}
+  .card:hover .card-media img{transform:scale(1.045)}
+  .tag{position:absolute;top:12px;left:12px;z-index:3;background:var(--bone);color:var(--ink);font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px}
+  .tag.sale{background:var(--wine);color:var(--bone)}
+  .quick{position:absolute;left:12px;right:12px;bottom:12px;z-index:3;background:var(--ink);color:var(--bone);font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:13px;text-align:center;opacity:0;transform:translateY(12px);transition:.45s var(--ease)}
+  .card:hover .quick,.card:focus-within .quick{opacity:1;transform:none}
+  .quick:hover{background:var(--wine)}
+  .card-info{padding-top:15px;display:flex;justify-content:space-between;gap:14px;align-items:baseline}
+  .card-info h3{font-family:'Jost',sans-serif;font-weight:400;font-size:14px;letter-spacing:.02em}
+  .card-info .meta{font-size:12px;color:var(--ink-soft);margin-top:3px;letter-spacing:.05em}
+  .price{font-size:14px;white-space:nowrap}
+  .price .was{color:var(--ink-soft);text-decoration:line-through;margin-right:7px;font-size:12px}
+  .price .now{color:var(--wine)}
+
+  /* ---------- editorial split ---------- */
+  .split{display:grid;grid-template-columns:1.05fr 1fr;align-items:stretch;min-height:560px}
+  .split.flip{grid-template-columns:1fr 1.05fr}
+  .split-media{position:relative;overflow:hidden;background:var(--line);min-height:380px}
+  .split-media img{width:100%;height:100%;object-fit:cover}
+  .split-text{display:flex;flex-direction:column;justify-content:center;padding:clamp(36px,6vw,92px);background:var(--paper)}
+  .split.flip .split-text{order:-1}
+  .split-text .eyebrow{color:var(--wine);margin-bottom:22px}
+  .split-text h2{font-size:clamp(38px,5vw,72px);margin-bottom:22px}
+  .split-text p{max-width:42ch;color:var(--ink-soft);margin-bottom:34px;font-weight:300}
+
+  /* ---------- promo banner ---------- */
+  .promo{position:relative;min-height:62vh;display:grid;place-items:center;text-align:center;color:var(--bone);overflow:hidden}
+  .promo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%}
+  .promo::after{content:"";position:absolute;inset:0;background:rgba(20,18,14,.46)}
+  .promo-inner{position:relative;z-index:2;padding:0 24px}
+  .promo .eyebrow{color:rgba(244,241,236,.8);margin-bottom:18px}
+  .promo h2{font-size:clamp(40px,8vw,108px);color:var(--bone);margin-bottom:14px}
+  .promo p{color:rgba(244,241,236,.9);margin-bottom:30px;font-weight:300}
+
+  /* ---------- categories ---------- */
+  .cats{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.8vw,24px)}
+  .cat{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--line);display:flex;align-items:flex-end}
+  .cat img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.1s var(--ease)}
+  .cat:hover img{transform:scale(1.05)}
+  .cat::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.5) 100%)}
+  .cat-label{position:relative;z-index:2;padding:26px;color:var(--bone);width:100%;display:flex;justify-content:space-between;align-items:flex-end}
+  .cat-label h3{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:500}
+  .cat-label span{font-size:11px;letter-spacing:.16em;text-transform:uppercase;border-bottom:1px solid var(--bone);padding-bottom:2px}
+
+  /* ---------- press ---------- */
+  .press{background:var(--ink);color:var(--bone)}
+  .press .eyebrow{color:rgba(244,241,236,.55);text-align:center;display:block;margin-bottom:46px}
+  .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(28px,4vw,64px)}
+  .quote{text-align:center}
+  .quote p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(20px,2vw,26px);line-height:1.4;color:var(--bone);margin-bottom:18px}
+  .quote cite{font-style:normal;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(244,241,236,.6)}
+
+  /* ---------- journal ---------- */
+  .journal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,40px)}
+  .post-media{aspect-ratio:5/4;overflow:hidden;background:var(--line);margin-bottom:20px}
+  .post-media img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease)}
+  .post:hover .post-media img{transform:scale(1.04)}
+  .post .eyebrow{color:var(--wine);margin-bottom:12px}
+  .post h3{font-family:'Cormorant Garamond',serif;font-size:25px;font-weight:500;line-height:1.18;margin-bottom:10px}
+  .post p{color:var(--ink-soft);font-size:14px;font-weight:300;max-width:40ch}
+
+  /* ---------- newsletter ---------- */
+  .news{background:var(--paper);border-top:1px solid var(--line)}
+  .news-inner{text-align:center;max-width:620px;margin:0 auto}
+  .news h2{font-size:clamp(34px,5vw,60px);margin-bottom:16px}
+  .news p{color:var(--ink-soft);margin-bottom:34px;font-weight:300}
+  .news-form{display:flex;gap:0;border-bottom:1px solid var(--ink);max-width:460px;margin:0 auto}
+  .news-form input{flex:1;background:none;border:none;padding:14px 4px;font-family:inherit;font-size:14px;letter-spacing:.04em;color:var(--ink)}
+  .news-form input::placeholder{color:var(--ink-soft)}
+  .news-form input:focus{outline:none}
+  .news-form button{font-size:12px;letter-spacing:.18em;text-transform:uppercase;padding:0 6px}
+  .news-form button:hover{color:var(--wine)}
+  .news-note{font-size:11px;color:var(--ink-soft);margin-top:14px;letter-spacing:.05em}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--ink);color:rgba(244,241,236,.78);padding:clamp(56px,8vw,96px) 0 36px}
+  .foot-top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;padding-bottom:56px;border-bottom:1px solid rgba(244,241,236,.14)}
+  .foot-brand .brand{color:var(--bone);text-align:left;font-size:34px;margin-bottom:18px}
+  .foot-brand p{max-width:32ch;font-weight:300;font-size:14px;color:rgba(244,241,236,.6)}
+  .foot-col h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--bone);margin-bottom:20px;font-weight:500}
+  .foot-col a{display:block;font-size:14px;font-weight:300;margin-bottom:12px;color:rgba(244,241,236,.7);transition:.25s;width:fit-content}
+  .foot-col a:hover{color:var(--bone)}
+  .foot-bot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;padding-top:30px;font-size:12px;letter-spacing:.06em;color:rgba(244,241,236,.5)}
+  .foot-bot .socials{display:flex;gap:24px}
+  .foot-bot a:hover{color:var(--bone)}
+
+  /* ---------- cart drawer ---------- */
+  .overlay{position:fixed;inset:0;background:rgba(20,18,14,.4);opacity:0;visibility:hidden;transition:.4s;z-index:90}
+  .overlay.open{opacity:1;visibility:visible}
+  .drawer{position:fixed;top:0;right:0;height:100%;width:min(420px,92vw);background:var(--bone);z-index:100;transform:translateX(100%);transition:transform .5s var(--ease);display:flex;flex-direction:column}
+  .drawer.open{transform:none}
+  .drawer-head{display:flex;justify-content:space-between;align-items:center;padding:26px var(--pad);border-bottom:1px solid var(--line)}
+  .drawer-head h3{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500}
+  .drawer-close{font-size:13px;letter-spacing:.1em;text-transform:uppercase}
+  .drawer-body{flex:1;overflow-y:auto;padding:8px var(--pad)}
+  .line-item{display:flex;gap:16px;padding:22px 0;border-bottom:1px solid var(--line)}
+  .line-item .thumb{width:72px;height:92px;background:var(--line);object-fit:cover;flex-shrink:0}
+  .line-item .li-info{flex:1}
+  .line-item h4{font-weight:400;font-size:14px;margin-bottom:4px}
+  .line-item .li-meta{font-size:12px;color:var(--ink-soft);margin-bottom:10px}
+  .line-item .li-row{display:flex;justify-content:space-between;align-items:center}
+  .qty{display:flex;align-items:center;gap:12px;border:1px solid var(--line);padding:4px 10px}
+  .qty button{font-size:15px;line-height:1;color:var(--ink-soft)}
+  .qty button:hover{color:var(--ink)}
+  .li-remove{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+  .li-remove:hover{color:var(--wine)}
+  .cart-empty{text-align:center;color:var(--ink-soft);padding:70px 0;font-weight:300}
+  .drawer-foot{padding:24px var(--pad);border-top:1px solid var(--line)}
+  .drawer-foot .totals{display:flex;justify-content:space-between;margin-bottom:6px;font-size:14px}
+  .drawer-foot .totals.grand{font-size:16px;margin-bottom:20px}
+  .drawer-foot .ship-note{font-size:11px;color:var(--ink-soft);margin-bottom:20px;letter-spacing:.04em}
+  .checkout{width:100%;text-align:center;justify-content:center}
+
+  /* scroll-in for sections */
+  .obs{opacity:0;transform:translateY(30px)}
+  .obs.in{opacity:1;transform:none;transition:opacity .8s var(--ease),transform .8s var(--ease)}
+
+  /* ---------- responsive ---------- */
+  @media(max-width:1040px){
+    .foot-top{grid-template-columns:1fr 1fr}
+    .foot-brand{grid-column:1/-1}
+  }
+  @media(max-width:860px){
+    .nav{grid-template-columns:auto 1fr auto}
+    .nav-links{display:none}
+    .menu-toggle{display:inline-flex;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+    .grid{grid-template-columns:repeat(2,1fr)}
+    .split,.split.flip{grid-template-columns:1fr}
+    .split.flip .split-text{order:0}
+    .cats,.quotes,.journal-grid{grid-template-columns:1fr}
+    .quotes{gap:48px}
+    .cats{gap:14px}
+    .journal-grid{gap:40px}
+    /* mobile menu panel */
+    .mobile-menu{position:fixed;inset:0;background:var(--bone);z-index:80;padding:90px var(--pad) 40px;transform:translateY(-100%);transition:transform .5s var(--ease);display:flex;flex-direction:column;gap:8px}
+    .mobile-menu.open{transform:none}
+    .mobile-menu a{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:500;padding:6px 0;border-bottom:1px solid var(--line)}
+  }
+  @media(min-width:861px){.mobile-menu{display:none}}
+  @media(max-width:520px){
+    .grid{grid-template-columns:1fr 1fr;gap:12px}
+    .card-info h3{font-size:13px}
+    .hero-row{flex-direction:column;align-items:flex-start}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation-duration:.001ms!important;transition-duration:.001ms!important}
+    .reveal,.obs{opacity:1;transform:none}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<div class="announce">Complimentary shipping on orders over $200 — Pre-Look 2026 now arriving</div>
+
+<header>
+  <nav class="wrap nav">
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu">Menu</button>
+    <div class="nav-links">
+      <a href="#new">New In</a>
+      <a href="#collection">Collections</a>
+      <a href="#story">Our Story</a>
+      <a href="#journal">Journal</a>
+    </div>
+    <a href="#top" class="brand">AVELINE</a>
+    <div class="nav-icons">
+      <button aria-label="Search">Search</button>
+      <button aria-label="Account" class="acct">Account</button>
+      <button class="cart-btn" id="cartOpen" aria-label="Open cart">
+        Bag<span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<!-- mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#new">New In</a>
+  <a href="#collection">Collections</a>
+  <a href="#story">Our Story</a>
+  <a href="#journal">Journal</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-media">
+      <img data-fallback="1" alt="Aveline Pre-Look 2026 campaign"
+        src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&q=80&auto=format&fit=crop">
+    </div>
+    <div class="hero-inner wrap">
+      <p class="eyebrow hero-eyebrow reveal d1">The Pre-Look 2026 Campaign</p>
+      <h1 class="display reveal d2">Quiet<br><em>luxury,</em> worn loud.</h1>
+      <div class="hero-row reveal d3">
+        <p>A considered wardrobe of tailored essentials, made in limited runs from natural fibres.</p>
+        <a href="#new" class="btn btn-light">Shop the collection <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Made in limited runs</span><span>Natural fibres only</span><span>Carbon-neutral delivery</span><span>Atelier-finished</span>
+      <span>Made in limited runs</span><span>Natural fibres only</span><span>Carbon-neutral delivery</span><span>Atelier-finished</span>
+    </div>
+  </div>
+
+  <!-- NEW IN -->
+  <section class="sec" id="new">
+    <div class="wrap">
+      <div class="sec-head obs">
+        <div>
+          <p class="eyebrow" style="margin-bottom:14px">Just arrived</p>
+          <h2 class="display">New In</h2>
+        </div>
+        <a href="#collection">View all</a>
+      </div>
+      <div class="grid" id="gridNew"></div>
+    </div>
+  </section>
+
+  <!-- EDITORIAL SPLIT -->
+  <section class="split obs" id="story">
+    <div class="split-media">
+      <img data-fallback="1" alt="Inside the Aveline atelier"
+        src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=1100&q=80&auto=format&fit=crop">
+    </div>
+    <div class="split-text">
+      <p class="eyebrow">Our Story</p>
+      <h2 class="display">Cut once,<br>worn for years.</h2>
+      <p>We design slowly. Each piece begins on the cutting table in our atelier and is produced in small, traceable batches — so nothing is wasted and everything is made to last.</p>
+      <a href="#journal" class="btn btn-dark" style="align-self:flex-start">Read the journal <span class="arrow">→</span></a>
+    </div>
+  </section>
+
+  <!-- BESTSELLERS -->
+  <section class="sec" id="bestseller" style="padding-top:clamp(64px,9vw,124px)">
+    <div class="wrap">
+      <div class="sec-head obs">
+        <div>
+          <p class="eyebrow" style="margin-bottom:14px">Most loved</p>
+          <h2 class="display">Bestsellers</h2>
+        </div>
+        <a href="#collection">View all</a>
+      </div>
+      <div class="grid" id="gridBest"></div>
+    </div>
+  </section>
+
+  <!-- PROMO BANNER -->
+  <section class="promo obs">
+    <img data-fallback="1" alt="The Bridal edit"
+      src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=1600&q=80&auto=format&fit=crop">
+    <div class="promo-inner">
+      <p class="eyebrow">The Bridal Edit</p>
+      <h2 class="display">For the<br>quietest yes.</h2>
+      <p>Made-to-measure gowns and separates, hand-finished in our atelier.</p>
+      <a href="#collection" class="btn btn-light">Explore bridal <span class="arrow">→</span></a>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="sec" id="collection">
+    <div class="wrap">
+      <div class="sec-head obs">
+        <div>
+          <p class="eyebrow" style="margin-bottom:14px">Shop by category</p>
+          <h2 class="display">Collections</h2>
+        </div>
+      </div>
+      <div class="cats obs">
+        <a class="cat" href="#new">
+          <img data-fallback="1" alt="Womenswear" src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=900&q=80&auto=format&fit=crop">
+          <div class="cat-label"><h3>Womenswear</h3><span>Shop →</span></div>
+        </a>
+        <a class="cat" href="#new">
+          <img data-fallback="1" alt="Tailoring" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&q=80&auto=format&fit=crop">
+          <div class="cat-label"><h3>Tailoring</h3><span>Shop →</span></div>
+        </a>
+        <a class="cat" href="#new">
+          <img data-fallback="1" alt="Accessories" src="https://images.unsplash.com/photo-1492707892479-7bc8d5a4ee93?w=900&q=80&auto=format&fit=crop">
+          <div class="cat-label"><h3>Accessories</h3><span>Shop →</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRESS -->
+  <section class="sec press obs">
+    <div class="wrap">
+      <span class="eyebrow">As featured in</span>
+      <div class="quotes">
+        <blockquote class="quote"><p>“The most considered debut of the season — every seam earns its place.”</p><cite>Vogue Australia</cite></blockquote>
+        <blockquote class="quote"><p>“A masterclass in restraint. The tailoring is faultless.”</p><cite>The Business of Fashion</cite></blockquote>
+        <blockquote class="quote"><p>“Quietly luxurious clothes built to outlast the trend cycle.”</p><cite>Harper’s Bazaar</cite></blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOURNAL -->
+  <section class="sec" id="journal">
+    <div class="wrap">
+      <div class="sec-head obs">
+        <div>
+          <p class="eyebrow" style="margin-bottom:14px">The Journal</p>
+          <h2 class="display">Notes & stories</h2>
+        </div>
+        <a href="#journal">All stories</a>
+      </div>
+      <div class="journal-grid obs">
+        <a class="post" href="#journal">
+          <div class="post-media"><img data-fallback="1" alt="Behind Pre-Look 2026" src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=900&q=80&auto=format&fit=crop"></div>
+          <p class="eyebrow">Campaign</p>
+          <h3>Behind Pre-Look 2026</h3>
+          <p>A look inside the shoot, the fabric sourcing, and the people who made it.</p>
+        </a>
+        <a class="post" href="#journal">
+          <div class="post-media"><img data-fallback="1" alt="How to care for linen" src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=900&q=80&auto=format&fit=crop"></div>
+          <p class="eyebrow">Care</p>
+          <h3>The art of caring for linen</h3>
+          <p>Five habits that keep natural fibres looking their best for decades.</p>
+        </a>
+        <a class="post" href="#journal">
+          <div class="post-media"><img data-fallback="1" alt="Five ways to wear the trench" src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=900&q=80&auto=format&fit=crop"></div>
+          <p class="eyebrow">Styling</p>
+          <h3>Five ways to wear the trench</h3>
+          <p>Our most versatile silhouette, styled from the desk to the weekend.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="sec news" id="contact">
+    <div class="wrap news-inner">
+      <h2 class="display">Join the atelier list</h2>
+      <p>Early access to drops, private sales, and the occasional note from the studio.</p>
+      <div class="news-form">
+        <input type="email" id="emailInput" placeholder="Your email address" aria-label="Email address">
+        <button id="subscribe">Subscribe →</button>
+      </div>
+      <p class="news-note" id="newsNote">No spam, only good things. Unsubscribe anytime.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <div class="brand">AVELINE</div>
+        <p>Contemporary atelier. Considered pieces, made in limited runs from natural fibres — designed in Sydney.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Shop</h4>
+        <a href="#new">New In</a>
+        <a href="#bestseller">Bestsellers</a>
+        <a href="#collection">Tailoring</a>
+        <a href="#collection">Bridal</a>
+      </div>
+      <div class="foot-col">
+        <h4>About</h4>
+        <a href="#story">Our Story</a>
+        <a href="#journal">Journal</a>
+        <a href="#">Sustainability</a>
+        <a href="#">Stockists</a>
+      </div>
+      <div class="foot-col">
+        <h4>Help</h4>
+        <a href="#">Shipping & Returns</a>
+        <a href="#">Size Guide</a>
+        <a href="#contact">Contact</a>
+        <a href="#">FAQ</a>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© 2026 Aveline Atelier. All rights reserved.</span>
+      <div class="socials">
+        <a href="#">Instagram</a>
+        <a href="#">Pinterest</a>
+        <a href="#">TikTok</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- CART -->
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer" aria-label="Shopping bag" aria-hidden="true">
+  <div class="drawer-head">
+    <h3>Your bag <span id="drawerCount" style="font-family:'Jost';font-size:13px;color:var(--ink-soft)"></span></h3>
+    <button class="drawer-close" id="cartClose">Close ✕</button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+  <div class="drawer-foot" id="drawerFoot" style="display:none">
+    <div class="totals"><span>Subtotal</span><span id="subtotal">$0</span></div>
+    <p class="ship-note">Shipping & taxes calculated at checkout.</p>
+    <button class="btn btn-dark checkout">Proceed to checkout <span class="arrow">→</span></button>
+  </div>
+</aside>
+
+<script>
+/* ---------- product data ---------- */
+const PRODUCTS = [
+  // New In
+  {id:1,name:"The Aria Trench",cat:"Outerwear · Stone",price:480,img:"1591047139829-d91aecb6caea",grid:"new",tag:"New"},
+  {id:2,name:"Silk Slip Dress",cat:"Dresses · Ivory",price:290,img:"1539008835657-9e8e9680c956",grid:"new",tag:"New"},
+  {id:3,name:"Wide-Leg Wool Trouser",cat:"Tailoring · Charcoal",price:240,img:"1594633312681-425c7b97ccd1",grid:"new"},
+  {id:4,name:"Cashmere Crew Knit",cat:"Knitwear · Oat",price:210,img:"1576566588028-4147f3842f27",grid:"new"},
+  // Bestsellers
+  {id:5,name:"The Linen Shirt",cat:"Shirting · White",price:160,img:"1602810318383-e386cc2a3ccf",grid:"best",tag:"Bestseller"},
+  {id:6,name:"Tailored Blazer",cat:"Tailoring · Black",price:390,was:460,img:"1507003211169-0a1dd7228f2d",grid:"best",tag:"sale"},
+  {id:7,name:"Pleated Midi Skirt",cat:"Skirts · Sand",price:185,img:"1495385794356-15371f348c31",grid:"best"},
+  {id:8,name:"Leather Tote",cat:"Accessories · Tan",price:320,img:"1584917865442-de89df76afd3",grid:"best"}
+];
+
+const imgUrl = id => `https://images.unsplash.com/photo-${id}?w=700&q=80&auto=format&fit=crop`;
+
+/* graceful fallback for any image that fails to load */
+function attachFallback(img){
+  img.addEventListener('error',()=>{
+    if(img.dataset.failed) return;
+    img.dataset.failed="1";
+    const hues=[28,32,18,200,210,40];
+    const h=hues[(parseInt(img.dataset.seed||"0"))%hues.length];
+    img.style.background=`linear-gradient(135deg,hsl(${h} 22% 86%),hsl(${h} 18% 74%))`;
+    img.removeAttribute('src');
+    img.style.minHeight="100%";
+  },{once:true});
+}
+
+/* ---------- render grids ---------- */
+function cardHTML(p){
+  const priceHTML = p.was
+    ? `<span class="price"><span class="was">$${p.was}</span><span class="now">$${p.price}</span></span>`
+    : `<span class="price">$${p.price}</span>`;
+  const tagHTML = p.tag ? `<span class="tag ${p.tag==='sale'?'sale':''}">${p.tag==='sale'?'Sale':p.tag}</span>` : '';
+  return `<article class="card">
+    <div class="card-media">
+      ${tagHTML}
+      <img data-fallback="1" data-seed="${p.id}" alt="${p.name}" src="${imgUrl(p.img)}">
+      <button class="quick" data-add="${p.id}">+ Add to bag</button>
+    </div>
+    <div class="card-info">
+      <div><h3>${p.name}</h3><div class="meta">${p.cat}</div></div>
+      ${priceHTML}
+    </div>
+  </article>`;
+}
+document.getElementById('gridNew').innerHTML  = PRODUCTS.filter(p=>p.grid==='new').map(cardHTML).join('');
+document.getElementById('gridBest').innerHTML = PRODUCTS.filter(p=>p.grid==='best').map(cardHTML).join('');
+
+document.querySelectorAll('img[data-fallback]').forEach(attachFallback);
+
+/* ---------- cart ---------- */
+let cart = {}; // id -> qty
+const $ = s => document.querySelector(s);
+const drawer=$('#drawer'), overlay=$('#overlay');
+
+function openCart(){drawer.classList.add('open');overlay.classList.add('open');drawer.setAttribute('aria-hidden','false');}
+function closeCart(){drawer.classList.remove('open');overlay.classList.remove('open');drawer.setAttribute('aria-hidden','true');}
+$('#cartOpen').onclick=openCart;
+$('#cartClose').onclick=closeCart;
+overlay.onclick=()=>{closeCart();closeMenu();};
+
+function addToCart(id){ cart[id]=(cart[id]||0)+1; renderCart(); openCart(); }
+function changeQty(id,d){ cart[id]=(cart[id]||0)+d; if(cart[id]<=0) delete cart[id]; renderCart(); }
+function removeItem(id){ delete cart[id]; renderCart(); }
+
+function renderCart(){
+  const ids=Object.keys(cart);
+  const totalItems=ids.reduce((s,id)=>s+cart[id],0);
+  const subtotal=ids.reduce((s,id)=>s+PRODUCTS.find(p=>p.id==id).price*cart[id],0);
+  $('#cartCount').textContent=totalItems;
+  $('#cartCount').style.display = totalItems? 'grid':'none';
+  $('#drawerCount').textContent = totalItems? `(${totalItems})`:'';
+  const body=$('#drawerBody'), foot=$('#drawerFoot');
+  if(!ids.length){
+    body.innerHTML=`<div class="cart-empty">Your bag is empty.<br>Time to find something lovely.</div>`;
+    foot.style.display='none'; return;
+  }
+  body.innerHTML=ids.map(id=>{
+    const p=PRODUCTS.find(x=>x.id==id);
+    return `<div class="line-item">
+      <img class="thumb" data-fallback="1" data-seed="${p.id}" src="${imgUrl(p.img)}" alt="${p.name}">
+      <div class="li-info">
+        <h4>${p.name}</h4>
+        <div class="li-meta">${p.cat} — $${p.price}</div>
+        <div class="li-row">
+          <div class="qty">
+            <button data-dec="${p.id}" aria-label="Decrease">–</button>
+            <span>${cart[id]}</span>
+            <button data-inc="${p.id}" aria-label="Increase">+</button>
+          </div>
+          <button class="li-remove" data-rem="${p.id}">Remove</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  $('#subtotal').textContent='$'+subtotal.toLocaleString();
+  foot.style.display='block';
+  body.querySelectorAll('img[data-fallback]').forEach(attachFallback);
+}
+
+/* event delegation */
+document.addEventListener('click',e=>{
+  const a=e.target.closest('[data-add]'); if(a){addToCart(+a.dataset.add);return;}
+  const inc=e.target.closest('[data-inc]'); if(inc){changeQty(+inc.dataset.inc,1);return;}
+  const dec=e.target.closest('[data-dec]'); if(dec){changeQty(+dec.dataset.dec,-1);return;}
+  const rem=e.target.closest('[data-rem]'); if(rem){removeItem(+rem.dataset.rem);return;}
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeCart();closeMenu();}});
+renderCart();
+
+/* ---------- mobile menu ---------- */
+const mm=$('#mobileMenu'), mt=$('#menuToggle');
+let menuOpen=false;
+function closeMenu(){menuOpen=false;mm.classList.remove('open');mt.textContent='Menu';}
+mt.onclick=()=>{menuOpen=!menuOpen;mm.classList.toggle('open',menuOpen);mt.textContent=menuOpen?'Close':'Menu';};
+mm.querySelectorAll('a').forEach(a=>a.onclick=closeMenu);
+
+/* ---------- newsletter ---------- */
+$('#subscribe').onclick=()=>{
+  const v=$('#emailInput').value.trim();
+  const note=$('#newsNote');
+  if(/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){
+    note.textContent='Thank you — welcome to the list.';
+    note.style.color='var(--wine)';
+    $('#emailInput').value='';
+  }else{
+    note.textContent='Please enter a valid email address.';
+    note.style.color='var(--wine)';
+  }
+};
+
+/* ---------- reveals ---------- */
+window.addEventListener('load',()=>{
+  document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
+});
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});
+},{threshold:.12});
+document.querySelectorAll('.obs').forEach(el=>io.observe(el));
+
+/* nav background solidifies after scroll */
+const hdr=document.querySelector('header');
+addEventListener('scroll',()=>{hdr.style.background = scrollY>40 ? 'rgba(244,241,236,.94)' : 'rgba(244,241,236,.82)';});
+</script>
+</body>
+</html>
